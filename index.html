@@ -3,161 +3,161 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Low-Life Store</title>
+<title>Low Life Store</title>
 
 <style>
 body {
-  margin: 0;
-  font-family: Arial;
-  background: #0d0d0d;
-  color: white;
+    margin: 0;
+    font-family: Arial;
+    background: #0d0d0d;
+    color: white;
 }
 
-/* HEADER */
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  background: black;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: black;
 }
 
 .logo {
-  font-size: 22px;
-  font-weight: bold;
-  color: gold;
+    color: gold;
+    font-weight: bold;
+    font-size: 22px;
 }
 
-.cart-btn {
-  background: gold;
-  color: black;
-  padding: 8px 12px;
-  border-radius: 10px;
-  font-weight: bold;
+.cart {
+    background: gold;
+    color: black;
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
-/* PRODUCTS */
 .container {
-  padding: 15px;
+    padding: 15px;
 }
 
 .card {
-  background: #1a1a1a;
-  border-radius: 15px;
-  overflow: hidden;
-  margin-bottom: 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    background: #1a1a1a;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    overflow: hidden;
 }
 
 .card img {
-  width: 100%;
+    width: 100%;
 }
 
-.card-content {
-  padding: 15px;
+.card h3 {
+    margin: 10px;
 }
 
 .price {
-  color: gold;
-  font-size: 18px;
-  font-weight: bold;
+    color: gold;
+    margin: 10px;
 }
 
-.btn {
-  background: gold;
-  color: black;
-  padding: 12px;
-  border: none;
-  width: 100%;
-  border-radius: 8px;
-  margin-top: 10px;
-  font-weight: bold;
+button {
+    width: 90%;
+    margin: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: gold;
+    font-weight: bold;
 }
 
-/* CART POPUP */
 .cart-box {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: black;
-  padding: 15px;
-  border-top: 2px solid gold;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: black;
+    padding: 15px;
+    border-top: 2px solid gold;
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">🔥 Low-Life Store 🔥</div>
-  <div class="cart-btn">🛒 <span id="count">0</span></div>
+    <div class="logo">🔥 Low Life Store 🔥</div>
+    <div class="cart" onclick="showCart()">🛒 <span id="count">0</span></div>
 </header>
 
 <div class="container">
 
 <!-- PRODUIT 1 -->
 <div class="card">
-<img src="images/tenis1.jpg">
-<div class="card-content">
-<h3>Tenis Street</h3>
-<p class="price">6000 HTG</p>
-<p>Konfò ak stil pou chak jou.</p>
-<button class="btn" onclick="add('Tenis Street',6000)">Ajoute nan panye</button>
-</div>
+<img src="https://i.imgur.com/1.jpg">
+<h3>Sandal Fashion</h3>
+<div class="price">5500 HTG</div>
+<button onclick="addToCart('Sandal Fashion', 5500)">Ajoute nan panye</button>
 </div>
 
 <!-- PRODUIT 2 -->
 <div class="card">
-<img src="images/sandal1.jpg">
-<div class="card-content">
-<h3>Sandal Design</h3>
-<p class="price">5500 HTG</p>
-<p>Style inik 🔥</p>
-<button class="btn" onclick="add('Sandal',5500)">Ajoute nan panye</button>
-</div>
-</div>
-
-<!-- PRODUIT 3 -->
-<div class="card">
-<img src="images/asics.jpg">
-<div class="card-content">
-<h3>Asics</h3>
-<p class="price">6000 HTG</p>
-<p>Sport + drip 💯</p>
-<button class="btn" onclick="add('Asics',6000)">Ajoute nan panye</button>
-</div>
+<img src="https://i.imgur.com/2.jpg">
+<h3>Tenis Street</h3>
+<div class="price">6000 HTG</div>
+<button onclick="addToCart('Tenis Street', 6000)">Ajoute nan panye</button>
 </div>
 
 </div>
 
-<div class="cart-box">
-<p id="items"></p>
-<p>Total: <span id="total">0</span> HTG</p>
-<button class="btn" onclick="buy()">Pase kòmand</button>
+<!-- CART -->
+<div class="cart-box" id="cartBox" style="display:none;">
+<h3>Panye ou</h3>
+<div id="items"></div>
+<h3>Total: <span id="total">0</span> HTG</h3>
 
-<p style="font-size:12px;">
-Livrezon: Okap & P-au-P <br>
-MonCash: 50944011437 <br>
-NatCash: 43633428
+<p>Peman:
+<br>MonCash: 50944011437
+<br>NatCash: 43633428
 </p>
+
+<button onclick="orderWhatsApp()">Kòmande sou WhatsApp</button>
 </div>
 
 <script>
 let cart = [];
 let total = 0;
 
-function add(name, price) {
-  cart.push(name);
-  total += price;
+function addToCart(name, price){
+    if(cart.length >= 3){
+        alert("Stock limite (3)");
+        return;
+    }
 
-  document.getElementById("items").innerText = cart.join(", ");
-  document.getElementById("total").innerText = total;
-  document.getElementById("count").innerText = cart.length;
+    cart.push(name);
+    total += price;
+
+    document.getElementById("count").innerText = cart.length;
 }
 
-function buy() {
-  let msg = "Bonjou, mwen vle: " + cart.join(", ") + " | Total: " + total + " HTG";
-  window.open("https://wa.me/50944011437?text=" + encodeURIComponent(msg));
+function showCart(){
+    let box = document.getElementById("cartBox");
+    box.style.display = box.style.display === "none" ? "block" : "none";
+
+    let items = document.getElementById("items");
+    items.innerHTML = "";
+
+    cart.forEach(item => {
+        items.innerHTML += "<p>"+item+"</p>";
+    });
+
+    document.getElementById("total").innerText = total;
+}
+
+function orderWhatsApp(){
+    let message = "Bonjou, mwen vle kòmande:\n";
+    cart.forEach(i => message += "- " + i + "\n");
+    message += "Total: " + total + " HTG";
+
+    window.open("https://wa.me/509XXXXXXXX?text=" + encodeURIComponent(message));
 }
 </script>
 
