@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Low-Life Store</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0d0d0d;
+  color: white;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: black;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: gold;
+}
+
+.cart-btn {
+  background: gold;
+  color: black;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+/* PRODUCTS */
+.container {
+  padding: 15px;
+}
+
+.card {
+  background: #1a1a1a;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.card img {
+  width: 100%;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.price {
+  color: gold;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.btn {
+  background: gold;
+  color: black;
+  padding: 12px;
+  border: none;
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* CART POPUP */
+.cart-box {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: black;
+  padding: 15px;
+  border-top: 2px solid gold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🔥 Low-Life Store 🔥</div>
+  <div class="cart-btn">🛒 <span id="count">0</span></div>
+</header>
+
+<div class="container">
+
+<!-- PRODUIT 1 -->
+<div class="card">
+<img src="images/tenis1.jpg">
+<div class="card-content">
+<h3>Tenis Street</h3>
+<p class="price">6000 HTG</p>
+<p>Konfò ak stil pou chak jou.</p>
+<button class="btn" onclick="add('Tenis Street',6000)">Ajoute nan panye</button>
+</div>
+</div>
+
+<!-- PRODUIT 2 -->
+<div class="card">
+<img src="images/sandal1.jpg">
+<div class="card-content">
+<h3>Sandal Design</h3>
+<p class="price">5500 HTG</p>
+<p>Style inik 🔥</p>
+<button class="btn" onclick="add('Sandal',5500)">Ajoute nan panye</button>
+</div>
+</div>
+
+<!-- PRODUIT 3 -->
+<div class="card">
+<img src="images/asics.jpg">
+<div class="card-content">
+<h3>Asics</h3>
+<p class="price">6000 HTG</p>
+<p>Sport + drip 💯</p>
+<button class="btn" onclick="add('Asics',6000)">Ajoute nan panye</button>
+</div>
+</div>
+
+</div>
+
+<div class="cart-box">
+<p id="items"></p>
+<p>Total: <span id="total">0</span> HTG</p>
+<button class="btn" onclick="buy()">Pase kòmand</button>
+
+<p style="font-size:12px;">
+Livrezon: Okap & P-au-P <br>
+MonCash: 50944011437 <br>
+NatCash: 43633428
+</p>
+</div>
+
+<script>
+let cart = [];
+let total = 0;
+
+function add(name, price) {
+  cart.push(name);
+  total += price;
+
+  document.getElementById("items").innerText = cart.join(", ");
+  document.getElementById("total").innerText = total;
+  document.getElementById("count").innerText = cart.length;
+}
+
+function buy() {
+  let msg = "Bonjou, mwen vle: " + cart.join(", ") + " | Total: " + total + " HTG";
+  window.open("https://wa.me/50944011437?text=" + encodeURIComponent(msg));
+}
+</script>
+
+</body>
+</html>
